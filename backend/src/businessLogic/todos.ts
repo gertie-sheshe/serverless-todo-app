@@ -5,7 +5,7 @@ import { CreateTodoRequest } from '../requests/CreateTodoRequest'
 // import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 // import { createLogger } from '../utils/logger'
 import * as uuid from 'uuid'
-import { createTodo, getUserTodos } from '../dataLayer/todosAcess'
+import { createTodo, getUserTodos, deleteTodoById } from '../dataLayer/todosAcess'
 // import * as createError from 'http-errors'
 
 // // TODO: Implement businessLogic
@@ -26,4 +26,8 @@ export const createUserTodo = async (newTodo: CreateTodoRequest, userId: string)
 
 export const getAllUserTodos = async (userId: string): Promise<TodoItem[]> => {
   return getUserTodos(userId);
+}
+
+export const deleteUserTodo = async (todoId: string, userId: string): Promise<void> => {
+  return deleteTodoById(todoId, userId);
 }

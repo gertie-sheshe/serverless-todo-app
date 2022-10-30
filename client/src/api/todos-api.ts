@@ -53,6 +53,7 @@ export async function deleteTodo(
       'Authorization': `Bearer ${idToken}`
     }
   })
+
 }
 
 export async function getUploadUrl(

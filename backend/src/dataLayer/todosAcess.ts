@@ -25,6 +25,16 @@ export async function createTodo(todo: TodoItem): Promise<TodoItem> {
   return todo
 }
 
+export async function deleteTodoById(todoId: string, userId: string): Promise<void> {
+  await docClient.delete({
+    TableName: todosTable,
+    Key: {
+      todoId,
+      userId
+    }
+  }).promise()
+}
+
 export async function getUserTodos(userId: string): Promise<TodoItem[]> {
   const result = await docClient.query({
     TableName: todosTable,
