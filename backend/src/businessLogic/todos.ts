@@ -2,10 +2,10 @@
 // import { AttachmentUtils } from './attachmentUtils';
 import { TodoItem } from '../models/TodoItem'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
-// import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
+import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 // import { createLogger } from '../utils/logger'
 import * as uuid from 'uuid'
-import { createTodo, getUserTodos, deleteTodoById } from '../dataLayer/todosAcess'
+import { createTodo, getUserTodos, deleteTodoById, updateTodoById } from '../dataLayer/todosAcess'
 // import * as createError from 'http-errors'
 
 // // TODO: Implement businessLogic
@@ -30,4 +30,8 @@ export const getAllUserTodos = async (userId: string): Promise<TodoItem[]> => {
 
 export const deleteUserTodo = async (todoId: string, userId: string): Promise<void> => {
   return deleteTodoById(todoId, userId);
+}
+
+export const updateTodo = async (todoId: string, userId: string, updatedTodo: UpdateTodoRequest): Promise<void> => {
+  return updateTodoById(todoId, userId, updatedTodo);
 }
