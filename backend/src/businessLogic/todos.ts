@@ -6,6 +6,8 @@ import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 // import { createLogger } from '../utils/logger'
 import * as uuid from 'uuid'
 import { createTodo, getUserTodos, deleteTodoById, updateTodoById } from '../dataLayer/todosAcess'
+import { generateUploadUrl } from '../helpers/attachmentUtils'
+
 // import * as createError from 'http-errors'
 
 // // TODO: Implement businessLogic
@@ -34,4 +36,8 @@ export const deleteUserTodo = async (todoId: string, userId: string): Promise<vo
 
 export const updateTodo = async (todoId: string, userId: string, updatedTodo: UpdateTodoRequest): Promise<void> => {
   return updateTodoById(todoId, userId, updatedTodo);
+}
+
+export const createAttachmentPresignedUrl = async (todoId: string): Promise<string> => {
+ return generateUploadUrl(todoId);
 }

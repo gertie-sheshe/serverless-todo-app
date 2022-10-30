@@ -2,12 +2,10 @@ import * as AWS from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
 import * as AWSXRay from 'aws-xray-sdk'
 
-// import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 // import { createLogger } from '../utils/logger'
 import { TodoItem } from '../models/TodoItem'
 import { UpdateTodoRequest } from '../requests/UpdateTodoRequest';
 
-// import { TodoUpdate } from '../models/TodoUpdate';
 
 const XAWS = AWSXRay.captureAWS(AWS)
 
@@ -56,6 +54,22 @@ export async function updateTodoById(todoId: string, userId: string, updatedTodo
   }).promise()
 }
 
+// export async function updateTodoAttachmentById(updatedTodo: TodoItem): Promise<TodoItem> {
+//   const result = await docClient.update({
+//     TableName: todosTable,
+//     Key: {
+//       todoId: updatedTodo.todoId,
+//       userId: updatedTodo.userId
+//     },
+//     UpdateExpression: "set attachmentUrl = :attachmentUrl",
+//     ExpressionAttributeValues: {
+//       ":attachmentUrl": updatedTodo.attachmentUrl
+//     }
+//   }).promise()
+
+//   return result.Attributes as TodoItem
+// }
+
 export async function getUserTodos(userId: string): Promise<TodoItem[]> {
   const result = await docClient.query({
     TableName: todosTable,
@@ -69,6 +83,7 @@ export async function getUserTodos(userId: string): Promise<TodoItem[]> {
   return items as TodoItem[]
 }
 
+
 function createDynamoDBClient() {
   if (process.env.IS_OFFLINE) {
     console.log('Creating a local DynamoDB instance')
@@ -80,54 +95,3 @@ function createDynamoDBClient() {
 
   return new XAWS.DynamoDB.DocumentClient()
 }
-
-
-// export class TodoAccess {
-
-//   constructor(
-//     private readonly docClient: DocumentClient = createDynamoDBClient(),
-//     private readonly todosTable = process.env.TODOS_TABLE) {
-//   }
-
-//   async getAllTodos(): Promise<TodoItem[]> {
-//     // console.log('Getting all groups')
-//     logger.info('Getting all groups')
-
-//     const result = await this.docClient.scan({
-//       TableName: this.todosTable
-//     }).promise()
-
-//     const items = result.Items
-//     return items as TodoItem[]
-//   }
-
-//   async createTodo(todo: TodoItem): Promise<TodoItem> {
-//     await this.docClient.put({
-//       TableName: this.todosTable,
-//       Item: todo
-//     }).promise()
-
-//     return todo
-//   }
-
-//   async updateTodo(todo: TodoUpdate): Promise<[]> {
-//     await this.docClient.put({
-//       TableName: this.todosTable,
-//       Item: todo
-//     }).promise()
-
-//     return []
-//   }
-
-//   async deleteTodo(id: string): Promise<[]> {
-//     await this.docClient.delete({
-//       TableName: this.todosTable,
-//       Key: {
-//         todoId: id
-//       }
-//     }).promise()
-
-//     return []
-//   }
-// }
-
