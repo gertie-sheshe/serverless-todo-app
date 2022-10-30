@@ -90,14 +90,10 @@ function getToken(authHeader: string): string {
 async function getSecret() {
   if (cachedSecret) return cachedSecret;
 
-  console.log('GET SECRET', secretId)
-
   const data = await client.getSecretValue({
     SecretId: secretId
   }) 
   .promise();
-
-  console.log('CAHED SECRET', data)
 
   cachedSecret = data.SecretString;
 
