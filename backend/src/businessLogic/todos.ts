@@ -3,7 +3,7 @@ import { CreateTodoRequest } from '../requests/CreateTodoRequest'
 import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
 import { createLogger } from '../utils/logger'
 import * as uuid from 'uuid'
-import { createTodo, getUserTodos, deleteTodoById, updateTodoById } from '../dataLayer/todosAcess'
+import { createTodo, getUserTodos, deleteTodoById, updateTodoById, saveImageAttachment } from '../dataLayer/todosAcess'
 import { generateUploadUrl } from '../helpers/attachmentUtils'
 
 // // TODO: Implement businessLogic
@@ -42,5 +42,10 @@ export const updateTodo = async (todoId: string, userId: string, updatedTodo: Up
 
 export const createAttachmentPresignedUrl = async (todoId: string): Promise<string> => {
   logger.info('Creating a presigned url');
- return generateUploadUrl(todoId);
+  return generateUploadUrl(todoId);
+}
+
+export const saveAttachmentUrl = async (userId: string, todoId: string, bucketName: string): Promise<void> => {
+  logger.info('Saving attachment url');
+  return saveImageAttachment(userId, todoId, bucketName);
 }

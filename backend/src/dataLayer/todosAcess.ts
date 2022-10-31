@@ -1,6 +1,6 @@
 import * as AWS from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb';
-import * as AWSXRay from 'aws-xray-sdk'
+const AWSXRay = require('aws-xray-sdk')
 
 import { createLogger } from '../utils/logger'
 import { TodoItem } from '../models/TodoItem'
@@ -57,6 +57,19 @@ export async function updateTodoById(todoId: string, userId: string, updatedTodo
       "#name": "name"
     }
   }).promise()
+}
+
+export async function saveImageAttachment(userId: string, todoId: string, bucketName: string): Promise<void> {
+  logger.info('Updating database with attachment url');
+  await docClient.update({
+        TableName: todosTable,
+        Key: { userId, todoId },
+        ConditionExpression: 'attribute_exists(todoId)',
+        UpdateExpression: 'set attachmentUrl = :attachmentUrl',
+        ExpressionAttributeValues: {
+          ':attachmentUrl': `https://${bucketName}.s3.amazonaws.com/${todoId}`
+        }
+      }).promise();
 }
 
 export async function getUserTodos(userId: string): Promise<TodoItem[]> {

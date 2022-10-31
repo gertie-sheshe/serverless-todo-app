@@ -1,7 +1,7 @@
 # TODO: Change the name of the org
 org: kidoti
-app: serverless-todo-app
-service: serverless-todo-app
+app: serverless-gertrude-todo-app
+service: serverless-gertrude-todo-app
 
 plugins:
   - serverless-webpack
@@ -143,6 +143,11 @@ functions:
           - s3:PutObject
           - s3:GetObject
         Resource: arn:aws:s3:::${self:provider.environment.ATTACHMENT_S3_BUCKET}/*
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+          - dynamodb:QueryItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
 
 resources:
   Resources:
