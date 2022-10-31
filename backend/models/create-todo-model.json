@@ -4,9 +4,14 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 20
     },
     "dueDate": {
+      "type": "string"
+    },
+    "attachmentUrl": {
       "type": "string"
     }
   },
