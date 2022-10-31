@@ -1,8 +1,6 @@
 import { CustomAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda'
 import 'source-map-support/register'
 import * as AWS from 'aws-sdk';
-
-
 import { verify } from 'jsonwebtoken'
 
 import { createLogger } from '../../utils/logger'
@@ -64,8 +62,8 @@ export const handler = async (
 }
 
 async function verifyToken(authHeader: string): Promise<JwtPayload> {
+  logger.info('Verifying token');
   const token = getToken(authHeader)
-  // const jwt: Jwt = decode(token, { complete: true }) as Jwt
 
   // TODO: Implement token verification
   // You should implement it similarly to how it was implemented for the exercise for the lesson 5
